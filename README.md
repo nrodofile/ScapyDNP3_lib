@@ -4,6 +4,15 @@ The Distributed Network Protocol (DNP3) is defined in [IEEE Std 1815](https://st
 
 This project is work-in-progress by the Queensland University of Technology(QUT) [Information Security discipline](https://www.qut.edu.au/science-engineering/our-schools/school-of-electrical-engineering-and-computer-science/information-security) and was developed to study cyber attacks on DNP3 critical infrustrcutre. The work can be demonstrated in our paper, [Real-Time and Interactive Attacks on DNP3 Critical Infrastructure Using Scapy](http://crpit.com/confpapers/CRPITV161Rodofile.pdf), published in the CRPIT and Presented at the Australasian Information Security Conference (AISC 2015) in Sydney Australia.  
 
-The code comes with absolutely no warranty, and we are not liable if it does something completely unexpected. If you use this code in an academic work, please cite our paper.
-
 Please note that this code depends on the [scapy](http://www.secdev.org/projects/scapy/doc/index.html) library.
+
+##License
+Copyright 2014-2015 N.R Rodofile
+
+Licensed under the GPLv3.
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
