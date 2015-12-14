@@ -4,6 +4,8 @@ The Distributed Network Protocol (DNP3) is defined in [IEEE Std 1815](https://st
 
 This project is work-in-progress by the Queensland University of Technology(QUT) [Information Security discipline](https://www.qut.edu.au/science-engineering/our-schools/school-of-electrical-engineering-and-computer-science/information-security) and was developed to study cyber attacks on DNP3 critical infrustrcutre. The work can be demonstrated in our paper, [Real-Time and Interactive Attacks on DNP3 Critical Infrastructure Using Scapy](http://crpit.com/confpapers/CRPITV161Rodofile.pdf), published in the CRPIT and Presented at the Australasian Information Security Conference (AISC 2015) in Sydney Australia.  
 
+If you use this code in any academic work, it would be very much a preciated if you cite our papers.
+
 Please note that this code depends on the [scapy](http://www.secdev.org/projects/scapy/doc/index.html) library.
 
 For more [QUT Information Security projects](http://qut-infosec.github.io/), visit our Github Repository.
