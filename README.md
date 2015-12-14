@@ -6,8 +6,10 @@ This project is work-in-progress by the Queensland University of Technology(QUT)
 
 Please note that this code depends on the [scapy](http://www.secdev.org/projects/scapy/doc/index.html) library.
 
+For more [QUT Information Security projects](http://qut-infosec.github.io/), visit our Github Repository.
+
 ##License
-Copyright 2014-2015 N.R Rodofile
+Copyright 2014-2016 N.R Rodofile
 
 Licensed under the GPLv3.
 
