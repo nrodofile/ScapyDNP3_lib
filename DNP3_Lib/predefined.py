@@ -33,7 +33,7 @@ But if doing 'from crc.predefined import *', only PredefinedCrc is imported.
 '''
 
 # local imports
-import crcmod
+from . import crcmod
 
 __all__ = [
     'PredefinedCrc',

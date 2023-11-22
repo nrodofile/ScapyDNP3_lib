@@ -1,6 +1,6 @@
 __author__ = 'Nicholas Rodofile'
 from scapy.all import *
-import crcmod.predefined
+from . import predefined
 
 '''
 # Copyright 2014-2016 N.R Rodofile
@@ -36,7 +36,7 @@ Initalise a predefined crc object for DNP3 Cyclic Redundancy Check
 Info : http://crcmod.sourceforge.net/crcmod.predefined.html
 '''
 def crcDNP(data):
-    crc16DNP = crcmod.predefined.mkCrcFun('crc-16-dnp')
+    crc16DNP = predefined.mkCrcFun('crc-16-dnp')
     return crc16DNP(data)
 
 
@@ -50,8 +50,8 @@ def CRC_check(chunk, crc):
 
 
 def update_data_chunk_crc(chunk):
-    crc = crcDNP(chunk[:-2])
-    chunk = chunk[:-2] + struct.pack('<H', crc)
+    crc = crcDNP(chunk)
+    chunk = chunk + struct.pack('<H', crc)
     return chunk
 
 
@@ -111,8 +111,8 @@ applicationFunctionCode = {
 
 class DNP3RequestDataObjects(Packet):
     fields_desc = [
-        BitField("Obj", 1, 4),
-        BitField("Var", 1, 4),
+        BitField("Obj", 1, 8),
+        BitField("Var", 1, 8),
         BitField("IndexPref", 1, 4),
         BitEnumField("QualfierCode", 1, 4, bitState),
     ]
@@ -172,7 +172,7 @@ class DNP3ApplicationResponse(DNP3Application):
 
     def mysummary(self):
         if isinstance(self.underlayer.underlayer, DNP3):
-            print self.FUNC_CODE.SEQ, "Hello"
+            print( self.FUNC_CODE.SEQ, "Hello")
             return self.underlayer.underlayer.sprintf(DNP3_summary + Transport_summary + Application_Rsp_summary)
         if isinstance(self.underlayer, DNP3Transport):
             return self.underlayer.sprintf(Transport_summary + Application_Rsp_summary)
@@ -277,8 +277,8 @@ class DNP3(Packet):
 
     def show_data_chunks(self):
         for i in range(len(self.data_chunks)):
-            print "\tData Chunk", i, "Len", len(self.data_chunks[i]),\
-                "CRC (", hex(struct.unpack('<H', self.data_chunks_crc[i])[0]), ")"
+            print ("\tData Chunk", i, "Len", len(self.data_chunks[i]),\
+                "CRC (", hex(struct.unpack('<H', self.data_chunks_crc[i])[0]), ")")
 
 
     def add_data_chunk(self, chunk):
@@ -287,11 +287,11 @@ class DNP3(Packet):
         self.data_chunks_crc.append(chunk[-2:])
 
     def post_build(self, pkt, pay):
-        cnk_len = self.chunk_len
+        cnk_len = self.data_chunk_len
         pay_len = len(pay)
         pkt_len = len(pkt)
         total = pkt_len + pay_len
-        chunks = pay_len / cnk_len  # chunk size
+        chunks = pay_len // cnk_len  # chunk size
         #chunks = total / cnk_len  # chunk size
         last_chunk = pay_len % cnk_len
 
@@ -311,7 +311,7 @@ class DNP3(Packet):
         if self.LENGTH is None:
 
              # Remove length , crc, start octets as part of length
-            length = (len(pkt+pay) - ((chunks * 2) + 1 + 2 + 2))
+            length = (len(pkt+pay) - 5)
             pkt = pkt[:2] + struct.pack('<B', length) + pkt[3:]
 
         CRC = crcDNP(pkt[:8])  # use only the first 8 octets
@@ -337,7 +337,7 @@ class DNP3(Packet):
                 self.add_data_chunk(pay[index:index + cnk_len])
                 remaining_pay -= cnk_len
 
-        payload = ''
+        payload = b''
         for chunk in range(len(self.data_chunks)):
             payload = payload + self.data_chunks[chunk] + self.data_chunks_crc[chunk]
         #  self.show_data_chunks()  # --DEBUGGING
